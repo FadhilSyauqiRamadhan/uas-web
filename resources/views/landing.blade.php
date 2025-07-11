@@ -19,7 +19,7 @@
 </div>
 
 <hr>
-
+ 
 <h3 class="mb-3">Tugas Terbaru</h3>
 @forelse($tugas as $item)
     <div class="card mb-2">
