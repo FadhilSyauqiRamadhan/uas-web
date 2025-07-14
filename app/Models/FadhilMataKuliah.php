@@ -11,6 +11,11 @@ class FadhilMataKuliah extends Model
 
     protected $fillable = ['kode', 'nama_mata_kuliah', 'dosen_pengampu'];
 
+    public function tugas()
+{
+    return $this->hasMany(FadhilTugas::class, 'mata_kuliah_id');
+}
+
 
 }
 

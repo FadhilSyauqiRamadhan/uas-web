@@ -23,10 +23,11 @@ class FadhilTugas extends Model
     {
         return $this->hasMany(\App\Models\FadhilPengumpulanTugas::class, 'tugas_id');
     }
+
     public function mataKuliah()
-    {
-        return $this->belongsTo(FadhilMataKuliah::class);
-    }
+        {
+            return $this->belongsTo(FadhilMataKuliah::class, 'mata_kuliah_id');
+        }
 
     public function kategori()
     {

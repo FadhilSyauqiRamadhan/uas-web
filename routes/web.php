@@ -25,6 +25,8 @@ Route::middleware(['auth', RoleAccess::class . ':admin'])->group(function () {
         Route::resource('kategori', FadhilKategoriController::class);
         Route::resource('mata-kuliah', FadhilMataKuliahController::class);
         Route::get('tugas/{id}/pengumpulan', [FadhilTugasController::class, 'pengumpulan'])->name('tugas.pengumpulan');
+        Route::get('mahasiswa/tugas', [DashboardAdminController::class, 'lihatPengumpulan'])
+            ->name('mahasiswa.tugas');
     });
 });
 

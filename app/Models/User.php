@@ -46,4 +46,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function pengumpulanTugas()
+    {
+        return $this->hasMany(FadhilPengumpulanTugas::class, 'user_id');
+    }
+    
 }

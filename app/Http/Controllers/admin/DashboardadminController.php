@@ -84,4 +84,21 @@ class DashboardAdminController extends Controller
             'aktivitasTerbaru'
         ));
     }
+
+   public function lihatPengumpulan()
+{
+    // Ambil semua mahasiswa
+    $mahasiswaList = User::where('role', 'mahasiswa')->get();
+
+    // Ambil semua tugas beserta mata kuliahnya
+    $tugasList = FadhilTugas::with('mataKuliah')->orderBy('deadline')->get();
+
+    // Ambil semua pengumpulan tugas dalam bentuk map
+    $pengumpulan = FadhilPengumpulanTugas::all()->groupBy(function ($item) {
+        return $item->user_id . '_' . $item->tugas_id;
+    });
+
+    return view('admin.mahasiswa_tugas', compact('mahasiswaList', 'tugasList', 'pengumpulan'));
+}
+
 }

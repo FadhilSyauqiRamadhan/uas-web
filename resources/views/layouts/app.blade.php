@@ -52,11 +52,17 @@
                                 <li><a class="dropdown-item" href="{{ route('admin.tugas.index') }}"><i class="bi bi-list-task"></i> Kelola Tugas</a></li>
                                 <li><a class="dropdown-item" href="{{ route('admin.kategori.index') }}"><i class="bi bi-tags"></i> Kategori</a></li>
                                 <li><a class="dropdown-item" href="{{ route('admin.mata-kuliah.index') }}"><i class="bi bi-journal-code"></i> Mata Kuliah</a></li>
+
+                                {{-- ✅ Tambahan menu --}}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.mahasiswa.tugas') }}"><i class="bi bi-table"></i> Status Tugas Mahasiswa</a></li>
+
                             @elseif(Auth::user()->role === 'mahasiswa')
                                 <li><a class="dropdown-item" href="{{ route('mahasiswa.dashboard') }}"><i class="bi bi-house-door"></i> Beranda Mahasiswa</a></li>
                                 <li><a class="dropdown-item" href="{{ route('mahasiswa.tugas.index') }}"><i class="bi bi-journal-text"></i> Daftar Tugas</a></li>
                             @endif
                         </ul>
+
                     </li>
 
                     {{-- Logout --}}
