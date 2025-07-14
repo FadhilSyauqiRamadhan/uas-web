@@ -29,7 +29,15 @@
                     <strong><i class="bi bi-info-circle"></i> Deskripsi:</strong>
                     <div class="border rounded p-2 bg-light mt-1">{{ $tugas->deskripsi }}</div>
                 </div>
-
+                
+                @if ($tugas->file)
+                <div class="mb-3">
+                    <strong><i class="bi bi-paperclip"></i> File Pendukung dari Dosen:</strong><br>
+                    <a href="{{ asset('storage/' . $tugas->file) }}" target="_blank" class="btn btn-outline-primary btn-sm mt-2">
+                        <i class="bi bi-file-earmark-arrow-down"></i> Lihat File Tugas
+                    </a>
+                </div>
+            @endif
                 @if ($pengumpulan)
                     <div class="alert alert-success">
                         <strong><i class="bi bi-check-circle"></i> Sudah dikumpulkan:</strong> {{ $pengumpulan->tanggal_kumpul }}<br>

@@ -15,7 +15,7 @@ class FadhilTugasController extends Controller
     if (Auth::user()->role !== 'admin') {
         abort(403);
     }
- 
+
     $tugas = FadhilTugas::with(['mataKuliah', 'kategori'])->get();
     return view('admin.tugas.index', compact('tugas'));
 }
@@ -77,30 +77,42 @@ public function update(Request $request, $id)
 }
 
     public function store(Request $request)
-    {
-        if (Auth::user()->role !== 'admin') {
-        abort(403);
-    }
+        {
+            if (Auth::user()->role !== 'admin') {
+                abort(403);
+            }
 
-        $request->validate([
-            'judul' => 'required',
-            'deskripsi' => 'required',
-            'deadline' => 'required|date',
-            'mata_kuliah_id' => 'required|exists:fadhil_mata_kuliahs,id',
-            'kategori_id' => 'required|exists:fadhil_kategoris,id',
-        ]);
+            $request->validate([
+                'judul' => 'required',
+                'deskripsi' => 'required',
+                'deadline' => 'required|date',
+                'mata_kuliah_id' => 'required|exists:fadhil_mata_kuliahs,id',
+                'kategori_id' => 'required|exists:fadhil_kategoris,id',
+                'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:10240', // max 10MB
+            ]);
 
-        FadhilTugas::create([
-            'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi,
-            'deadline' => $request->deadline,
-            'mata_kuliah_id' => $request->mata_kuliah_id,
-            'kategori_id' => $request->kategori_id,
-            'dibuat_oleh_user_id' => Auth::id(),
-        ]);
+            $path = null;
+            if ($request->hasFile('file')) {
+                if ($request->file('file')->isValid()) {
+                    $path = $request->file('file')->store('tugas_files', 'public');
+                } else {
+                    return back()->withErrors(['file' => 'File gagal diupload.'])->withInput();
+                }
+            }
 
-        return redirect()->route('admin.tugas.index')->with('success', 'Tugas berhasil ditambahkan.');
-    }
+            FadhilTugas::create([
+                'judul' => $request->judul,
+                'deskripsi' => $request->deskripsi,
+                'deadline' => $request->deadline,
+                'mata_kuliah_id' => $request->mata_kuliah_id,
+                'kategori_id' => $request->kategori_id,
+                'dibuat_oleh_user_id' => Auth::id(),
+                'file' => $path,
+            ]);
+
+            return redirect()->route('admin.tugas.index')->with('success', 'Tugas berhasil ditambahkan.');
+        }
+
 
     public function destroy($id)
     {

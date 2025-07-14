@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class FadhilPengumpulanTugasController extends Controller
 {
 
-    public function landing() 
+    public function landing()
 {
     // Ambil 3 tugas terbaru berdasarkan waktu dibuat
     $tugas = FadhilTugas::orderBy('created_at', 'desc')->take(5)->get();
@@ -46,7 +46,7 @@ class FadhilPengumpulanTugasController extends Controller
             abort(403, 'Akses hanya untuk mahasiswa.');
         }
         $request->validate([
-            'file_tugas' => 'required|mimes:pdf,doc,docx|max:2048',
+            'file_tugas' => 'required|mimes:pdf,doc,docx|max:10240',
         ]);
 
         $filePath = $request->file('file_tugas')->store('tugas', 'public');

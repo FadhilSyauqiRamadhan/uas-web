@@ -16,6 +16,7 @@ class FadhilTugas extends Model
         'mata_kuliah_id',
         'kategori_id',
         'dibuat_oleh_user_id',
+        'file',
     ];
 
     public function pengumpulanTugas()
@@ -35,5 +36,10 @@ class FadhilTugas extends Model
     public function pembuat()
     {
         return $this->belongsTo(User::class, 'dibuat_oleh_user_id');
+    }
+
+    public function getFileUrlAttribute()
+    {
+        return $this->file ? asset('storage/' . $this->file) : null;
     }
 }

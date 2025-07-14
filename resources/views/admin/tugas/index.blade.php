@@ -43,6 +43,16 @@
             <p class="mb-1"><strong><i class="bi bi-book"></i> Mata Kuliah:</strong> {{ $t->mataKuliah->nama_mata_kuliah }}</p>
             <p class="mb-1"><strong><i class="bi bi-tags"></i> Kategori:</strong> {{ $t->kategori->nama_kategori }}</p>
             <p class="mb-2"><strong><i class="bi bi-calendar-event"></i> Deadline:</strong> {{ $t->deadline }}</p>
+
+            @if($t->file)
+                <p class="mb-2">
+                    <strong><i class="bi bi-paperclip"></i> File:</strong>
+                    <a href="{{ asset('storage/' . $t->file) }}" target="_blank" class="text-decoration-underline">
+                        Download
+                    </a>
+                </p>
+            @endif
+
             <a href="{{ route('admin.tugas.edit', $t->id) }}" class="btn btn-warning btn-sm me-2">
                 <i class="bi bi-pencil"></i> Edit
             </a>

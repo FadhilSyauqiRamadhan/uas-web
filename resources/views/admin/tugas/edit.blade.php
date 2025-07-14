@@ -3,6 +3,17 @@
 @section('content')
     <h2>Edit Tugas</h2>
 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <strong><i class="bi bi-exclamation-circle"></i> Terdapat kesalahan pada input:</strong>
+        <ul class="mb-0 mt-1">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     <form action="{{ route('admin.tugas.update', $tugas->id) }}" method="POST">
         @csrf
         @method('PUT')
