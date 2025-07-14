@@ -91,7 +91,7 @@ public function update(Request $request, $id)
                 'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar|max:10240', // max 10MB
             ]);
 
-            $path = null;
+            $path = null; 
             if ($request->hasFile('file')) {
                 if ($request->file('file')->isValid()) {
                     $path = $request->file('file')->store('tugas_files', 'public');
