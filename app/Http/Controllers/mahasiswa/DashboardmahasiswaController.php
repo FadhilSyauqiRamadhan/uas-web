@@ -13,23 +13,35 @@ class DashboardMahasiswaController extends Controller
     {
         $user = Auth::user();
 
-        // Total semua tugas
+        // Ambil ID tugas yang sudah dikumpulkan user
+        $tugasSudahKumpul = FadhilPengumpulanTugas::where('user_id', $user->id)
+                            ->pluck('tugas_id')
+                            ->toArray();
+
+        // Hitung total tugas, sudah & belum
         $totalTugas = FadhilTugas::count();
-
-        // Tugas yang sudah dikumpulkan oleh user saat ini
-        $totalSudah = FadhilPengumpulanTugas::where('user_id', $user->id)->count();
-
-        // Tugas yang belum dikumpulkan
+        $totalSudah = count($tugasSudahKumpul);
         $totalBelum = $totalTugas - $totalSudah;
 
-        // Tugas dengan deadline dalam 7 hari ke depan
-        $tugasDekat = FadhilTugas::with(['mataKuliah', 'kategori'])
-            ->whereDate('deadline', '>=', now())
-            ->whereDate('deadline', '<=', now()->addDays(7))
-            ->orderBy('deadline')
-            ->get();
+        // Ambil parameter filter dari URL
+        $filter = request('filter');
+        $query = FadhilTugas::with(['mataKuliah', 'kategori'])
+                    ->whereNotIn('id', $tugasSudahKumpul) // <-- Filter yg belum dikumpulkan
+                    ->orderBy('deadline');
 
-        // Riwayat pengumpulan tugas terakhir user
+        // Terapkan filter deadline
+        if ($filter === 'today') {
+            $query->whereDate('deadline', today());
+        } elseif ($filter === '7days') {
+            $query->whereDate('deadline', '>=', today())
+                ->whereDate('deadline', '<=', now()->addDays(7));
+        } elseif ($filter === 'overdue') {
+            $query->whereDate('deadline', '<', today());
+        }
+
+        $tugasDekat = $query->get();
+
+        // Riwayat pengumpulan tugas
         $riwayat = FadhilPengumpulanTugas::with('tugas')
             ->where('user_id', $user->id)
             ->latest()

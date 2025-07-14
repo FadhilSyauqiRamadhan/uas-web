@@ -31,6 +31,7 @@ Route::middleware(['auth', RoleAccess::class . ':admin'])->group(function () {
 // 🔐 MAHASISWA (hanya mahasiswa)
 Route::middleware(['auth', RoleAccess::class . ':mahasiswa'])->group(function () {
     Route::get('/mahasiswa', [DashboardMahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+    Route::get('mahasiswa/riwayat', [\App\Http\Controllers\Mahasiswa\RiwayatController::class, 'index'])->name('mahasiswa.riwayat.index');
     Route::post('mahasiswa/tugas/{id}/kumpul', [FadhilPengumpulanTugasController::class, 'store'])->name('mahasiswa.tugas.kumpul');
 });
 
