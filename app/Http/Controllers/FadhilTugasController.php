@@ -15,7 +15,7 @@ class FadhilTugasController extends Controller
     if (Auth::user()->role !== 'admin') {
         abort(403);
     }
-
+ 
     $tugas = FadhilTugas::with(['mataKuliah', 'kategori'])->get();
     return view('admin.tugas.index', compact('tugas'));
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class FadhilPengumpulanTugasController extends Controller
 {
 
-    public function landing()
+    public function landing() 
 {
     // Ambil 3 tugas terbaru berdasarkan waktu dibuat
     $tugas = FadhilTugas::orderBy('created_at', 'desc')->take(5)->get();

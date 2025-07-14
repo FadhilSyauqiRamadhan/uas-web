@@ -18,7 +18,7 @@ class FadhilMataKuliahController extends Controller
         return view('admin.mata_kuliah.create');
     }
 
-    public function edit($id)
+    public function edit($id) 
 {
     $mataKuliah = FadhilMataKuliah::findOrFail($id);
     return view('admin.mata_kuliah.edit', compact('mataKuliah'));
