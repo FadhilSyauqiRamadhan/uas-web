@@ -13,12 +13,12 @@ class FadhilPengumpulanTugas extends Model
 
     public function tugas()
     {
-        return $this->belongsTo(\App\Models\FadhilTugas::class, 'tugas_id');
+        return $this->belongsTo(FadhilTugas::class, 'tugas_id');
     }
 
     public function user()
-{
-    return $this->belongsTo(User::class, 'user_id');
-}
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
 
