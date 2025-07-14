@@ -59,5 +59,9 @@ class FadhilPengumpulanTugasController extends Controller
         ]);
 
         return back()->with('success', 'Tugas berhasil dikumpulkan!');
+
+        if (FadhilPengumpulanTugas::where('user_id', Auth::id())->where('tugas_id', $id)->exists()) {
+        return back()->withErrors(['file_tugas' => 'Kamu sudah mengumpulkan tugas ini.'])->withInput();
+}
     }
 }
